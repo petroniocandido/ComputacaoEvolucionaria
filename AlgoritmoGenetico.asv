@@ -1,0 +1,13 @@
+classdef AlgoritmoGenetico
+    properties
+        nbpop;
+        nvar;
+        representacao;
+        selecao;
+    end
+    methods
+        function obj = AlgoritmoGenetico()
+            disp(NBPOP)
+        end
+    end
+end
