@@ -1,4 +1,4 @@
-classdef Cromossomo
+classdef (Abstract) Cromossomo
     properties
         nome;
         tipo;
@@ -6,7 +6,10 @@ classdef Cromossomo
         tamanho;
         min;
         max;
-        valor = 0;
+    end
+    methods (Abstract)
+    methods (Abstract)
+        function val = ValorReal(obj)
     end
     methods
         function obj = Cromossomo(nome,tipo,indice,tamanho,min,max)
@@ -18,7 +21,7 @@ classdef Cromossomo
             obj.max = max;
         end
         function dump(obj)
-            disp(obj.nome);
+            disp(obj);
         end
     end
 end

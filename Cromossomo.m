@@ -1,19 +1,24 @@
-classdef Cromossomo
-    properties
+classdef (Abstract) Cromossomo
+    properties(GetAccess = 'public', SetAccess = 'protected')
         nome;
         tipo;
-        indice;
-        tamanho;
+        precisao;
         min;
         max;
-        valorReal = 0;
+    end
+    properties(GetAccess = 'public', SetAccess = 'public')
+        indice;
+    end
+    methods (Abstract)
+        val = valorReal(obj, valorCodificado);
+        
     end
     methods
-        function obj = Cromossomo(nome,tipo,indice,tamanho,min,max)
+        function obj = Cromossomo(nome,tipo,indice,precisao,min,max)
             obj.nome = nome;
             obj.tipo = tipo;
             obj.indice = indice;
-            obj.tamanho = tamanho;
+            obj.precisao = precisao;
             obj.min = min;
             obj.max = max;
         end
