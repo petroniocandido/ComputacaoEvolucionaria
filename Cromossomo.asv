@@ -6,7 +6,7 @@ classdef Cromossomo
         tamanho;
         min;
         max;
-        valorReal = 0;
+        valor = 0;
     end
     methods
         function obj = Cromossomo(nome,tipo,indice,tamanho,min,max)
@@ -18,7 +18,7 @@ classdef Cromossomo
             obj.max = max;
         end
         function dump(obj)
-            disp(obj);
+            disp(obj.nome);
         end
     end
 end

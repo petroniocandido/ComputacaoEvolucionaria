@@ -1,13 +1,28 @@
 classdef AlgoritmoGenetico
-    properties
+    properties(GetAccess = 'public', SetAccess = 'private')
         nbpop;
-        nvar;
+        nvar = 1;
         representacao;
         selecao;
+        cromossomos = Cromossomo.empty;
     end
     methods
-        function obj = AlgoritmoGenetico()
-            disp(NBPOP)
+        function obj = AlgoritmoGenetico(nbpop,rep,sel)
+            obj.nbpop = nbpop;
+            obj.representacao = rep;
+            obj.selecao = sel;
         end
+        
+        function dump(obj)
+            disp(obj)
+        end
+        
+        function Cromossomo(obj,crom)
+            obj.cromossomos(obj.nvar,1) = crom;
+            obj.nvar = obj.nvar + 1;
+        end
+    end
+    methods(Access = protected)
+        
     end
 end
