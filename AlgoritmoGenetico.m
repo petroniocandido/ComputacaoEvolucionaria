@@ -1,22 +1,23 @@
-classdef  AlgoritmoGenetico
+classdef (Abstract) AlgoritmoGenetico
     properties(GetAccess = 'public', SetAccess = 'protected')
         nbpop;
-        L = 0;
+        L = 1;
         nvar = 0;
         representacao;
         selecao;
         cromossomos;
         P = [];
+        geracoes = 0;
     end
     %properties(Abstract)
     %    Random(obj);
     %end
-    %methods(Abstract)
-        %function fit = Fitness(genotipo);
+    methods(Abstract)
+        h(obj,v);
         %function obj = VerificaCriterioParada(obj);
         %function obj = Selecionar(obj);
         %function obj = Reproduzir(obj);
-    %end
+    end
     methods
         function obj = AlgoritmoGenetico(nbpop,rep,sel)
             obj.nbpop = nbpop;
@@ -41,9 +42,29 @@ classdef  AlgoritmoGenetico
         
         function obj = addCromossomo(obj,crom)
             obj.nvar = obj.nvar + 1;
-            crom.indice = obj.nvar
+            crom.indice = obj.L;
             obj.cromossomos = [obj.cromossomos crom];            
             obj.L = obj.L + crom.precisao;
+        end
+                
+        function val = getGenotipo(obj,i,k)
+            crom = obj.cromossomos(k);
+            val = obj.P(i,crom.indice:crom.indice+crom.precisao-1);
+        end
+        
+        function val = getFenotipos(obj)
+            val = zeros(obj.nbpop,obj.nvar);
+            for i = 1:obj.nbpop
+                for k = 1:obj.nvar
+                    crom = obj.cromossomos(k);
+                    val(i,k) = crom.valorReal( obj.P(i,crom.indice:crom.indice+crom.precisao-1) );
+                end
+            end
+        end
+        
+        function val = getFenotipo(obj,i,k)
+            crom = obj.cromossomos(k);
+            val = crom.valorReal( obj.P(i,crom.indice:crom.indice+crom.precisao-1) );
         end
         
         function obj = initPopulacao(obj)
@@ -51,6 +72,18 @@ classdef  AlgoritmoGenetico
                 obj.P = randi([0 1],obj.nbpop, obj.L);
             else
                 obj.P = rand([0 1],obj.nbpop, obj.L);
+            end
+        end
+        
+        function val = getFitness(obj,i)
+            h = obj.h(i);
+            val = 1/(1+h);
+        end
+        
+        function val = getFitnessP(obj)
+            val = zeros(1,obj.nbpop);
+            for i = 1:obj.nbpop
+                val(i) = obj.getFitness(i);
             end
         end
     end

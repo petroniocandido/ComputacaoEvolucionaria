@@ -6,7 +6,7 @@ classdef CromossomoGray < Cromossomo
         end
         
         function val = valorReal(obj,valorCodificado)
-            val = obj.min + ((obj.max - obj.min)/(2^obj.precisao - 1))*binaryVectorToDecimal((valorCodificado));
+            val = obj.min + ((obj.max - obj.min)/(2^obj.precisao - 1))*binaryVectorToDecimal(gray2bin(valorCodificado));
         end
      end
 end
