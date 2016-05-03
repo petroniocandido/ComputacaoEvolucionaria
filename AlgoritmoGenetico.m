@@ -6,6 +6,7 @@ classdef  AlgoritmoGenetico
         representacao;
         selecao;
         cromossomos;
+        P = [];
     end
     %properties(Abstract)
     %    Random(obj);
@@ -23,6 +24,10 @@ classdef  AlgoritmoGenetico
             obj.selecao = sel;
             if rep == TipoRepresentacao.Binaria
                 obj.cromossomos = CromossomoBinario.empty;
+            elseif rep == TipoRepresentacao.Gray
+                obj.cromossomos = CromossomoGray.empty;
+            else
+                obj.cromossomos = CromossomoReal.empty;
             end
         end
         
@@ -35,9 +40,18 @@ classdef  AlgoritmoGenetico
         end
         
         function obj = addCromossomo(obj,crom)
-            obj.cromossomos = [obj.cromossomos crom];
             obj.nvar = obj.nvar + 1;
+            crom.indice = obj.nvar
+            obj.cromossomos = [obj.cromossomos crom];            
             obj.L = obj.L + crom.precisao;
+        end
+        
+        function obj = initPopulacao(obj)
+            if obj.representacao == TipoRepresentacao.Binaria || obj.representacao == TipoRepresentacao.Gray
+                obj.P = randi([0 1],obj.nbpop, obj.L);
+            else
+                obj.P = rand([0 1],obj.nbpop, obj.L);
+            end
         end
     end
     methods(Access = protected)

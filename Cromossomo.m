@@ -11,7 +11,6 @@ classdef (Abstract) Cromossomo
     end
     methods (Abstract)
         val = valorReal(obj, valorCodificado);
-        
     end
     methods
         function obj = Cromossomo(nome,tipo,indice,precisao,min,max)
